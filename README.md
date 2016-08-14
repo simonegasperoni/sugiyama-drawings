@@ -15,6 +15,7 @@ Hierarchical drawings are used to represent precedence relationships. Applicatio
 Layered graph drawing or hierarchical graph drawing is a type of graph drawing in which the vertices of a directed graph are drawn in horizontal rows or layers with the edges generally directed downwards.It is also known as Sugiyama-style graph drawing after Kozo Sugiyama, who first developed this drawing style.
 
 The four steps of the methodology:
+
 1. Cycle removal: temporarily reverts the direction of some edges in such a way to have an acyclic input graph, this step is not needed if the input graph has no directed cycle.
 2. Level assignment assigns nodes to levels (hence determining their y-coordinate) the graph is changed in such a way that each edge connects nodes on adjacent levels: this is obtained by introducing dummy nodes.
 3. Crossing reduction: sorts the nodes of each level in such a way to reduce the number of edge crossings.
