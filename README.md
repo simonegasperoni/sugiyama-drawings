@@ -1,12 +1,14 @@
 # sugiyama_step1
 
 ##An overview on hierarchical graph
-In a hierarchical drawing of a directed graph:
-* Nodes are drawn on a collection of horizontal lines (levels or layers) 
-* Edges are represented with polylines (polygonal chains)
-<br />
+In a hierarchical drawing of a directed graph: nodes are drawn on a collection of horizontal lines (levels or layers), edges are represented with polylines (polygonal chains).
+
+----------------------
+
 ![Alt text](img/hg.png?raw=true "an example of hierarchical graph")
-<br />
+
+----------------------
+
 Hierarchical drawings are used to represent precedence relationships. Applications include: computer network visualization, web maps visualization, visualization of biologic maps, social networks visualization, others...
 
 ##Sugiyama methodology
@@ -26,9 +28,9 @@ I'm going to explore the various alternatives (heuristics) for the removal of th
 
 I would compare the following heuristics:
 
-1. Heuristic based on a depth-first search
-2. Greedy approach proposed by Eades (see resources)
-3. Other heuristics that I produce
+1. **Heuristic based on a depth-first search**
+2. **Greedy approach proposed by Eades (see resources)**
+3. **Other heuristics that I produce**
 
 ##Focus on cycle removal
 Simply we have a graph G with a set of edege E and a set of vertices V (nodes), the problem is the following:
@@ -62,16 +64,14 @@ Lets look at the problem from a different perspective, let us choose a permutati
 π = (v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub>)
 ``` 
 of the nodes of G any edge (v<sub>i</sub>, v<sub>j</sub>) with i > j is said to be a leftward edge (with respect to π)
-<br />
 ![Alt text](img/dfs.png?raw=true "dfs approach")
-<br />
 
 *A topological sort of a directed graph is a linear ordering of its nodes such that for every directed edge (u,v), u comes before v in the ordering, a topological sort is possible if and only if the graph has no directed cycles*
 
 Given a permutation π of the nodes of G, the set of leftward egdes is a feedback set (it is also a feedback arc set). On the other hand, let R be a feedback set: if you compute a topological sort of the directed graph obtained by reverting all edges in R, you obtain a permutation of the nodes whose leftward edge set coincides with R. 
-<br />
+
 **Hence, the problem of finding a minimum size feedback set is equivalent to the problem of finding a permutation with the minimum number of leftward edges**
-<br />
+
 
 Arbitrarily choose a permutation of the nodes of G and count the number of leftward egdes, if this number is greater than half the edges of G, we choose the opposite node sequence.
 Size of R: the number of reverted edges is at most half the total number of the edges of G, this heuristic is surely preferable with respect to the previous one whenever: 
