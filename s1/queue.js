@@ -1,21 +1,21 @@
-function Queue() {
-	var functionSet=(function() {
-		var _elements=[]; // creating a private array
-		return [
-		// push function
-		function() { return _elements.push .apply(_elements,arguments); },
-		// shift function
-		function() { return _elements.shift .apply(_elements,arguments); },
-		function() { return _elements.length; },
-		function(n) { return _elements.length=n; }];
-	})();
-	this.push=functionSet[0];
-	this.shift=functionSet[1];
-	this.getLength=functionSet[2];
-	this.setLength=functionSet[3];
-	// initializing the queue with given arguments
-	this.push.apply(this,arguments);
-};
-
- 
-
+function Queue(){
+	this.push=push;
+	this.getList=getList;
+	this.getLength=getLength;
+	this.array=[];
+	this.shift=shift;
+	function getList(){
+		return this.array;	
+	}
+	function getLength(){
+		return this.array.length;
+	}
+	function push(name){
+		this.array[this.array.length]=name;
+	}
+	function shift(){
+		var a=this.array[0];
+		this.array.shift();
+		return a;
+	}
+}
