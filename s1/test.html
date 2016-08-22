@@ -5,6 +5,14 @@
 	<script src="simgraph.js"></script>
 	<script src="queue.js"></script>
 	<script>
+
+		function dfs(node){
+			var array=[];
+			return [node].concat(dfs2(node));
+		}
+		function dfs2(a){
+			return [a];
+		}
 		/* test queue
 		var q=new Queue();
 		q.push(1);
@@ -14,12 +22,24 @@
 		console.log(q.shift());
 		console.log(q.getList())
 		*/
+		
 		//test simgraph
-		var vertex=new Simvertex("a");
-		vertex.addLinkto("b");
-		vertex.addLinkto("c");
-		vertex.addLinkto("b");
-		console.log(vertex.getLinks());
+		var a=new Simvertex("a");
+		var b=new Simvertex("b");
+		var c=new Simvertex("c");
+
+		a.addLinkto([b,c]);
+		b.addLinkto([c]);
+		
+
+		var graph=new Simgraph();
+		graph.addVertex(a);
+		graph.addVertex(b);
+		graph.addVertex(c);
+		graph.setInitialStates([a,b]);
+		graph.print();
+
+		console.log(dfs(2));
 	</script>
  </body>
 </html>
