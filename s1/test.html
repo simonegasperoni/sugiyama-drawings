@@ -5,14 +5,25 @@
 	<script src="simgraph.js"></script>
 	<script src="queue.js"></script>
 	<script>
+		function contains(a, obj){
+   			var i = a.length;
+  			while (i--) if (a[i]===obj) return true;
+   			return false;
+		}
+		
 
-		function dfs(node){
-			var array=[];
-			return [node].concat(dfs2(node));
-		}
-		function dfs2(a){
-			return [a];
-		}
+		function dfs_recur(node, visited) {
+          	var adj = node.getLinks();
+           	visited.push(node);
+           	document.write(node.getVertex());
+        	for (var i in adj) {
+               	var node = adj[i];
+               	if (0 > visited.indexOf(node)) dfs_recur(node, visited);
+        	}
+        	return visited;
+        }
+
+
 		/* test queue
 		var q=new Queue();
 		q.push(1);
@@ -27,19 +38,27 @@
 		var a=new Simvertex("a");
 		var b=new Simvertex("b");
 		var c=new Simvertex("c");
-
+		var d=new Simvertex("d");
+		var e=new Simvertex("e");
+		var f=new Simvertex("f");
+		var g=new Simvertex("g");
 		a.addLinkto([b,c]);
-		b.addLinkto([c]);
-		
+		b.addLinkto([d,e]);
+		c.addLinkto([f,g]);
 
 		var graph=new Simgraph();
 		graph.addVertex(a);
 		graph.addVertex(b);
 		graph.addVertex(c);
+		graph.addVertex(d);
+		graph.addVertex(e);
+		graph.addVertex(f);
+		graph.addVertex(g);
 		graph.setInitialStates([a,b]);
-		graph.print();
+		//graph.print();
+		console.log(dfs_recur(a,[]));
 
-		console.log(dfs(2));
+		
 	</script>
  </body>
 </html>
