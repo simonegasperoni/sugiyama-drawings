@@ -59,10 +59,7 @@ Size of the feedback set R: we assume G is connected, if a single DFS is perform
 ```
 
 ####A simple heuristic based on leftward edges
-Lets look at the problem from a different perspective, let us choose a permutation:
-```
-π = (v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub>)
-``` 
+Lets look at the problem from a different perspective, let us choose a permutation: π = (v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub>) 
 of the nodes of G any edge (v<sub>i</sub>, v<sub>j</sub>) with i > j is said to be a leftward edge (with respect to π)
 ![Alt text](img/dfs.png?raw=true "dfs approach")
 
@@ -87,3 +84,5 @@ that is, whenever
 
 - http://www.dia.uniroma3.it/~infovis/slides/2015-2016/180-layered-first-03.pdf
 - https://en.wikipedia.org/wiki/Layered_graph_drawing
+- http://bl.ocks.org/d3noob/5141278
+- https://github.com/adlawson/search-algorithms
