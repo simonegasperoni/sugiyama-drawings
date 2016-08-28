@@ -2,10 +2,11 @@
 
 function contains(a, obj) {
    	var i = a.length;
-  	while (i--) if (a[i]===obj) return true;
+  	while (i--) 
+  		if (a[i]===obj) 
+  			return true;
    	return false;
 }
-
 function Simvertex(vertex){
 	
 	this.vertex=vertex;
@@ -25,7 +26,7 @@ function Simvertex(vertex){
 	}
 	
 	function getLinks2(){
-		var array=[]
+		var array=[];
 		for (var i=0; i<this.linkto.length; i++) {
 			array[i]=this.linkto[i].getVertex();
 		}
@@ -59,6 +60,7 @@ function Simedge(firstnode, secondnode){
 	this.setPartOfSpanningtree=setPartOfSpanningtree;
 	this.noPartOfSpanningtree=noPartOfSpanningtree;
 	this.revEdge=revEdge;
+
 
 	function printEdge(){
 		return "edge: "+this.firstnode.getVertex()+" -> "
@@ -101,11 +103,13 @@ function Simgraph(){
 	this.initialstates=[];
 	this.getInitialStates=getInitialStates;
 	this.setInitialStates=setInitialStates;
+	this.getVertexFromLabel=getVertexFromLabel;
 	this.getVertices=getVertices;
 	this.addVertex=addVertex;
 	this.print=print;
 	this.dfs=dfs;
 	this.dfs_recur=dfs_recur;
+	this.getCsvForm=getCsvForm;
 	
 	function setInitialStates(states){
 		this.initialstates=states;
@@ -143,13 +147,32 @@ function Simgraph(){
 		return this.vertices;
 	}
 
+	function getVertexFromLabel(label){
+		var i=0;
+		while(i <this.vertices.length){
+			if (label==this.vertices[i].getVertex()) break;
+			else i++;
+		}
+		return this.vertices[i];
+	}
+
 	function print(){
 		for (var i=0; i<this.vertices.length; i++) {
-			document.write("---------------------------- <br>");
-			document.write("node: "+this.vertices[i].getVertex()+" <br>");
-			document.write("edges: "+this.vertices[i].getLinks3()+" <br>");
-			document.write("---------------------------- <br>");
+			console.log("node: "+this.vertices[i].getVertex()+" <br>");
+			console.log("edges: "+this.vertices[i].getLinks3()+" <br>");
+			//document.write("---------------------------- <br>");
 		}
 	}
-	
+
+	function getCsvForm(newlineform){
+		var res="source,target"+newlineform;
+		for (var i=0; i<this.vertices.length; i++) {
+			var edges = this.vertices[i].getLinks();
+			for (var j=0; j<edges.length; j++) {
+				res=res+edges[j].getFirstnode().getVertex()+","+
+					edges[j].getSecondnode().getVertex()+newlineform;
+			}
+		}
+		return res;
+	}
 }
