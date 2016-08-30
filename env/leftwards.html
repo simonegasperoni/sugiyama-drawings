@@ -2,7 +2,7 @@
 	<head>
 		<script src="js/lib/simgraph.js"></script>
 		<script src="js/lib/utility.js"></script>
-		<script src="js/lib/simpleset.js"></script>
+		<script src="js/lib/specialset.js"></script>
 		<meta charset="UTF-8">
 	</head>
 	<body>
@@ -74,15 +74,15 @@
   				});
   				// Show result[]
   				for (var i = 0; i < result.length; i++) {
-  					var s=new HashSet();
+  					var s=new SpecialSet();
   					for (var j = 0; j < result[i].length; j++) {
   						s.addAll(result[i][j].getLinks4());
   						if(s.contains(result[i][j])) s.remove(result[i][j]);
   					};
   					lwcounter[i]=s.size();
-  					//div2.innerHTML = div2.innerHTML + lwcounter[i] + "<br>";
+  					div2.innerHTML = div2.innerHTML + lwcounter[i] + "<br>";
   				};
-  				for (var i = 0; i <= 6; i++) div2.innerHTML = div2.innerHTML + result[0][i].getVertex() + ",";
+  				//for (var i = 0; i <= 6; i++) div2.innerHTML = div2.innerHTML + result[0][i].getVertex() + ",";
  				
  			}
 			function saveTextAsFile(){

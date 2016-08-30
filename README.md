@@ -26,11 +26,11 @@ Several alternative algorithms and heuristics are nowadays available for each st
 ##Goal
 I'm going to explore the various alternatives (heuristics) for the removal of the direct cycles of a directed graph, th goal is reducing the number of edges that have been inverted.
 
-I would compare the following heuristics:
+I would compare the following heuristics (see resources):
 
-1. **Heuristic based on a depth-first search**
-2. **Greedy approach proposed by Eades (see resources)**
-3. **Other heuristics that I produce**
+1. **Depth-first search**
+2. **Leftward-edges**
+3. **Greedy approach proposed by Eades**
 
 ##Focus on cycle removal
 Simply we have a graph G with a set of edege E and a set of vertices V (nodes), the problem is the following:
@@ -79,6 +79,9 @@ that is, whenever
 ```
 |E| > 2|V| - 2
 ```
+####Greedy approach proposed by Eades
+
+work in progress...
 
 ##Resources
 

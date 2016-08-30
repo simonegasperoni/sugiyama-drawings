@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
   <script src="http://d3js.org/d3.v3.js"></script>
   <style>
     path.link {
@@ -21,7 +20,12 @@
       pointer-events: none;
     }
   </style>
+  <head>
+    <meta charset="UTF-8">
+    </head>
   <body>
+    
+    <p><b>graph drawing with d3.js:</b> inverted arches shown in red</p>
     <input id="file_field" type="file"></input>
     <button type="button" onclick="DisplayFilePath();">draw</button>
     <button onclick="window.location='body.html';">erase</button>
@@ -41,7 +45,7 @@ links.forEach(function(link) {
 });
  
 var width = 960,
-    height = 450,
+    height = 430,
     color = d3.scale.category20c();
 
  
