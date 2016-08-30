@@ -14,7 +14,9 @@ function Simvertex(vertex){
 	this.getVertex=getVertex;
 	this.getLinks=getLinks;
 	this.getLinks2=getLinks2;
-	this.getLinks3=getLinks3
+	this.getLinks3=getLinks3;
+	this.getLinks4=getLinks4;
+	
 	this.addLinkto=addLinkto;
 
 	function getVertex(){
@@ -37,6 +39,14 @@ function Simvertex(vertex){
 		var array=[]
 		for (var i=0; i<this.linkto.length; i++) {
 			array[i]=this.linkto[i].printEdge();
+		}
+		return array;
+	}
+
+	function getLinks4(){
+		var array=[];
+		for (var i=0; i<this.linkto.length; i++) {
+			array[i]=this.linkto[i].getSecondnode();
 		}
 		return array;
 	}
@@ -110,6 +120,8 @@ function Simgraph(){
 	this.dfs=dfs;
 	this.dfs_recur=dfs_recur;
 	this.getCsvForm=getCsvForm;
+	this.getCsvForm2=getCsvForm2;
+	
 	
 	function setInitialStates(states){
 		this.initialstates=states;
@@ -171,6 +183,19 @@ function Simgraph(){
 			for (var j=0; j<edges.length; j++) {
 				res=res+edges[j].getFirstnode().getVertex()+","+
 					edges[j].getSecondnode().getVertex()+newlineform;
+			}
+		}
+		return res;
+	}
+	function getCsvForm2(newlineform){
+		var res="source,target,value"+newlineform;
+		for (var i=0; i<this.vertices.length; i++) {
+			var edges = this.vertices[i].getLinks();
+			for (var j=0; j<edges.length; j++) {
+				var value="1";
+				if(!edges[j].isPartOfSpanningtree()) value=0;
+				res=res+edges[j].getFirstnode().getVertex()+","+
+					edges[j].getSecondnode().getVertex()+","+value+newlineform;
 			}
 		}
 		return res;

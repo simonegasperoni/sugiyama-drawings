@@ -1,4 +1,117 @@
 <html>
-<head>work in progress</head>
-<body></body>
-</html>
+	<head>
+		<script src="js/lib/simgraph.js"></script>
+		<script src="js/lib/utility.js"></script>
+		<script src="js/lib/simpleset.js"></script>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<h2>
+			leftward edges-based heuristic
+		</h2>
+ 		<table>
+    		<tr>
+        		<td>import csv file:</td>
+        		<td><input type="file" id="fileToLoad"></td>
+        		<td><button onclick="loadFileAsText()">ok</button><td>
+        		<td><button onclick="execute()">execute</button><td>
+                <td><button onclick="window.location='leftwards.html';">erase</button></td>
+    		</tr>
+    		<tr>
+        		<td>save output as csv file:  </td>
+        		<td><input id="inputFileNameToSaveAs"></input></td>
+        		<td><button onclick="saveTextAsFile()">save</button></td>
+    		</tr>
+		</table>
+
+		<table style="width:70%;">
+    		<th><div valign="bottom" id="divID1"></div></th>
+        	<th><div valign="bottom" id="divID2"></div></th>
+		</table>	
+ 
+		<script type="text/javascript">
+ 			
+ 			var textFromFileLoaded="";
+ 			var graph=new Simgraph();
+
+ 			function execute(){
+ 				var nodes=[];
+ 				var edgesour=[];
+ 				var edgedest=[];
+ 				var div1 = document.getElementById('divID1');
+
+ 				result = textFromFileLoaded.split(/\r?\n/);
+ 				for (var i = 1 ; i <result.length-1; i++) {
+ 					var record=result[i].split(",");
+ 					addToSet(nodes,record[0]);
+ 					addToSet(nodes,record[1]);
+ 					edgesour.push(record[0]);
+ 					edgedest.push(record[1]);
+ 				};
+
+ 				for (var i = 0 ; i<nodes.length; i++) {
+ 					graph.addVertex(new Simvertex(nodes[i]));
+ 				};
+
+ 				for (var i = 0 ; i<edgesour.length; i++) {
+ 					var sour=graph.getVertexFromLabel(edgesour[i]);
+ 					var dest=graph.getVertexFromLabel(edgedest[i]);
+ 					sour.addLinkto(dest);
+ 				};
+
+ 				div1.innerHTML = div1.innerHTML +"<h2>imported graph:</h2>"+ graph.getCsvForm("<br>");
+
+ 				//permutations
+
+ 				var div2 = document.getElementById('divID2');
+				// Empty array to hold results
+  				var lwcounter =[];
+  				var result = [];
+  				var input = graph.getVertices();
+  				permutate(input, function (a) {
+    				// Create a copy of a[] and add that to result[]
+    				result.push(a.slice(0));
+  				});
+  				// Show result[]
+  				for (var i = 0; i < result.length; i++) {
+  					var s=new HashSet();
+  					for (var j = 0; j < result[i].length; j++) {
+  						s.addAll(result[i][j].getLinks4());
+  						if(s.contains(result[i][j])) s.remove(result[i][j]);
+  					};
+  					lwcounter[i]=s.size();
+  					//div2.innerHTML = div2.innerHTML + lwcounter[i] + "<br>";
+  				};
+  				for (var i = 0; i <= 6; i++) div2.innerHTML = div2.innerHTML + result[0][i].getVertex() + ",";
+ 				
+ 			}
+			function saveTextAsFile(){
+    			var textToSave = graph.getCsvForm("\n");
+    			var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+    			var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    			var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+ 
+    			var downloadLink = document.createElement("a");
+    			downloadLink.download = fileNameToSaveAs;
+    			downloadLink.innerHTML = "Download File";
+    			downloadLink.href = textToSaveAsURL;
+    			downloadLink.onclick = destroyClickedElement;
+    			downloadLink.style.display = "none";
+    			document.body.appendChild(downloadLink);
+ 
+    			downloadLink.click();
+			}
+			function destroyClickedElement(event){
+				document.body.removeChild(event.target);
+			}
+			function loadFileAsText(){
+				var fileToLoad = document.getElementById("fileToLoad").files[0];
+    			var fileReader = new FileReader();
+    			fileReader.onload = function(fileLoadedEvent){
+					textFromFileLoaded = fileLoadedEvent.target.result;
+					console.log(textFromFileLoaded);
+				};
+    			fileReader.readAsText(fileToLoad, "UTF-8");
+    			
+			} 
+		</script>
