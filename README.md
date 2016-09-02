@@ -81,7 +81,34 @@ that is, whenever
 ```
 ####Greedy approach proposed by Eades
 
-work in progress...
+A more sophisticated strategy has been proposed by eads, it based on a greedy technique. It searches for a sub-optimum sulution 
+through a sequence of steps focused on local optima.
+
+The algorithm iteratively removes nodes from G and adds them to one of two lists: S<sub>L</sub> and S<sub>R</sub>. When all nodes have been removed the sequence S is obtained as a concatenation of the two sequences S<sub>L</sub> and S<sub>R</sub>.
+
+The algorithm chooses in a greedy way the node to be removed from G and adds it to S<sub>L</sub> or S<sub>R</sub>:
+
+* if there is a source add it at the end of S<sub>L</sub>
+* if there is a sinks add it at the beginnig of S<sub>R</sub> (isolated nodes are also considered sinks)
+* if there is no sink or source choose a node u for which outdeg(u)-indeg(u) is maximum and add it at the end of S<sub>L</sub> the number of rightward egdes is locally maximized with respect to the leftward edges.
+
+**Pseudo code for Eads cycle removal algorithm**
+```
+Greedycycleremoval(G):
+
+	Input: a directed graph G
+	Output: a node sequence S for G
+
+	Initialize both Sl and Sr to be empty lists
+
+	While G is not empty do 
+		
+(a) While G contains a sink do choose a sink u, remove u from G, add u as the first element of Sr.
+(b) While G contains a source do choose a source v, remove v from G, add v as the last element of Sl.
+(c) if G is not empty then choose a node u, such that the difference outdeg(u)-indeg(u) is maximum, remove u from G an add u as the last element of Sl.
+
+	return Sl concatenates Sr
+```
 
 ##Resources
 
@@ -89,3 +116,4 @@ work in progress...
 - https://en.wikipedia.org/wiki/Layered_graph_drawing
 - http://bl.ocks.org/d3noob/5141278
 - https://github.com/adlawson/search-algorithms
+- https://github.com/simonegasperoni/sugiyama_step1/blob/master/env/js/lib/simgraph.js

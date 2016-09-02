@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<meta charset='utf-8'>
+<html>
+ <body>
+	<script src="../env/js/lib/simgraph.js"></script>
+
+	
+	<script>
+		//test simgraph
+		var a=new Simvertex("a");
+		var b=new Simvertex("b");
+		var c=new Simvertex("c");
+		var d=new Simvertex("d");
+		var e=new Simvertex("e");
+		var f=new Simvertex("f");
+		var g=new Simvertex("g");
+
+		var graph=new Simgraph();
+		graph.addVertex(a);
+		graph.addVertex(b);
+		graph.addVertex(c);
+		graph.addVertex(d);
+		graph.addVertex(e);
+		graph.addVertex(f);
+		graph.addVertex(g);
+
+		a.addLinkto(b);
+		a.addLinkto(f);
+		b.addLinkto(d);
+		d.addLinkto(c);
+		c.addLinkto(a);
+		e.addLinkto(d);
+		e.addLinkto(c);
+		e.addLinkto(f);
+		f.addLinkto(g);
+		g.addLinkto(e);
+		graph.print();
+		
+
+		document.write("<br>");
+		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");				
+		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");				
+		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");
+		document.write("after rmVertex(.)<br>");		
+		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");				
+		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");				
+		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");
+		document.write("<br>");
+
+		graph.rmVertex(a);
+		//document.write(graph.getVertices().length +"<br>");
+		graph.print();		
+
+	</script>
+ </body>
+</html>

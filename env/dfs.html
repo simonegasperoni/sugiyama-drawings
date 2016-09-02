@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<h2>
-			dfs-based heuristic
+			dfs-based heuristic with spanning tree
 		</h2>
  		<table>
     		<tr>
@@ -32,32 +32,12 @@
  
 		<script type="text/javascript">
  			var textFromFileLoaded="";
- 			var graph=new Simgraph();
+            var graph2=new Simgraph();
 
- 			function execute(){
- 				var nodes=[];
- 				var edgesour=[];
- 				var edgedest=[];
- 				var div1 = document.getElementById('divID1');
- 				var div2 = document.getElementById('divID2');
- 				result = textFromFileLoaded.split(/\r?\n/);
- 				for (var i = 1 ; i <result.length-1; i++) {
- 					var record=result[i].split(",");
- 					addToSet(nodes,record[0]);
- 					addToSet(nodes,record[1]);
- 					edgesour.push(record[0]);
- 					edgedest.push(record[1]);
- 				};
-
- 				for (var i = 0 ; i<nodes.length; i++) {
- 					graph.addVertex(new Simvertex(nodes[i]));
- 				};
-
- 				for (var i = 0 ; i<edgesour.length; i++) {
- 					var sour=graph.getVertexFromLabel(edgesour[i]);
- 					var dest=graph.getVertexFromLabel(edgedest[i]);
- 					sour.addLinkto(dest);
- 				};
+            function execute(){
+                var graph=createGraphFromCsv(textFromFileLoaded);
+                var div2 = document.getElementById('divID2');
+                var div1 = document.getElementById('divID1');
 
  				div1.innerHTML = div1.innerHTML +"<h2>pre-dfs</h2>"+ graph.getCsvForm("<br>");
  				graph.dfs(graph.getVertices()[0]);
@@ -72,11 +52,11 @@
  					};
  				};
 
- 				div2.innerHTML = div2.innerHTML +"<h2>post-dfs</h2>"+graph.getCsvForm("<br>");
- 				
+ 				div2.innerHTML = div2.innerHTML +"<h2>post-dfs</h2>"+graph.getCsvForm2("<br>");
+ 				graph2=graph;
  			}
 			function saveTextAsFile(){
-    			var textToSave = graph.getCsvForm2("\n");
+    			var textToSave = graph2.getCsvForm2("\n");
     			var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
     			var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
     			var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;

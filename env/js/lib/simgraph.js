@@ -16,7 +16,7 @@ function Simvertex(vertex){
 	this.getLinks2=getLinks2;
 	this.getLinks3=getLinks3;
 	this.getLinks4=getLinks4;
-	
+	this.rmLinkto=rmLinkto;
 	this.addLinkto=addLinkto;
 
 	function getVertex(){
@@ -51,8 +51,16 @@ function Simvertex(vertex){
 		return array;
 	}
 	
-	function addLinkto(verticesLinked){
-		this.linkto[this.linkto.length]=new Simedge(this, verticesLinked);	
+	function addLinkto(vertex){
+		this.linkto[this.linkto.length]=new Simedge(this, vertex);	
+	}
+
+	function rmLinkto(vertex){
+		var newlinksto=[];
+		for (var i = 0; i < this.linkto.length; i++) {
+			if (!(this.linkto[i].getSecondnode()==vertex)) newlinksto.push(this.linkto[i]);
+		};
+		this.linkto=newlinksto;
 	}
 
 }
@@ -70,6 +78,8 @@ function Simedge(firstnode, secondnode){
 	this.setPartOfSpanningtree=setPartOfSpanningtree;
 	this.noPartOfSpanningtree=noPartOfSpanningtree;
 	this.revEdge=revEdge;
+	this.setInverted=setInverted;
+	this.isInverted=isInverted;
 
 
 	function printEdge(){
@@ -93,6 +103,15 @@ function Simedge(firstnode, secondnode){
 	function setPartOfSpanningtree(){
 		this.intree=true;
 	}
+
+	function setInverted(){
+		this.intree=true;
+	}
+
+	function isInverted(){
+		return this.intree;
+	}
+	
 	
 	function noPartOfSpanningtree(){
 		this.intree=false;
@@ -121,6 +140,10 @@ function Simgraph(){
 	this.dfs_recur=dfs_recur;
 	this.getCsvForm=getCsvForm;
 	this.getCsvForm2=getCsvForm2;
+	this.getCsvLW=getCsvLW;
+	this.outdeg=outdeg;
+	this.indeg=indeg;
+	this.rmVertex=rmVertex;
 	
 	
 	function setInitialStates(states){
@@ -155,6 +178,15 @@ function Simgraph(){
 			this.vertices[this.vertices.length]=vertex;
 	}
 
+	function rmVertex(vertex){
+		var newvertices=[];
+		for (var i=0; i<this.vertices.length; i++) {
+			this.vertices[i].rmLinkto(vertex);
+			if(!(this.vertices[i]==vertex)) newvertices.push(this.vertices[i]);
+		};
+		this.vertices=newvertices;
+	}
+
 	function getVertices(){
 		return this.vertices;
 	}
@@ -169,10 +201,11 @@ function Simgraph(){
 	}
 
 	function print(){
+		document.write("----------------------------------------<br>");
 		for (var i=0; i<this.vertices.length; i++) {
-			console.log("node: "+this.vertices[i].getVertex()+" <br>");
-			console.log("edges: "+this.vertices[i].getLinks3()+" <br>");
-			//document.write("---------------------------- <br>");
+			document.write("node: "+this.vertices[i].getVertex()+" <br>");
+			document.write("edges: "+this.vertices[i].getLinks3()+" <br>");
+			document.write("----------------------------------------<br>");
 		}
 	}
 
@@ -187,6 +220,7 @@ function Simgraph(){
 		}
 		return res;
 	}
+
 	function getCsvForm2(newlineform){
 		var res="source,target,value"+newlineform;
 		for (var i=0; i<this.vertices.length; i++) {
@@ -200,4 +234,62 @@ function Simgraph(){
 		}
 		return res;
 	}
+
+	function getCsvLW(newlineform){
+		var res="source,target,value"+newlineform;
+		for (var i=0; i<this.vertices.length; i++) {
+			var edges = this.vertices[i].getLinks();
+			for (var j=0; j<edges.length; j++) {
+				var value="1";
+				if(edges[j].isInverted()) value=0;
+				res=res+edges[j].getFirstnode().getVertex()+","+
+					edges[j].getSecondnode().getVertex()+","+value+newlineform;
+			}
+		}
+		return res;
+	}
+
+	function outdeg(node){
+		return node.getLinks().length;
+
+	}
+	function indeg(node){
+		var counter=0;
+		for (var i = 0; i < this.vertices.length; i++){
+			var links=this.vertices[i].getLinks();
+			for (var j = 0; j < links.length; j++) {
+				if(links[j].getSecondnode()==node) counter++;
+			};
+		};
+		return counter;
+	}
+}
+
+
+function createGraphFromCsv(text){
+	var graph=new Simgraph();
+	var nodes=[];
+	var edgesour=[];
+	var edgedest=[];
+ 				
+	result = text.split(/\r?\n/);
+	for (var i = 1 ; i <result.length-1; i++) {
+		var record=result[i].split(",");
+		addToSet(nodes,record[0]);
+		addToSet(nodes,record[1]);
+		edgesour.push(record[0]);
+		edgedest.push(record[1]);
+	};
+
+	for (var i = 0 ; i<nodes.length; i++) {
+		graph.addVertex(new Simvertex(nodes[i]));
+	};
+
+	for (var i = 0 ; i<edgesour.length; i++) {
+		var sour=graph.getVertexFromLabel(edgesour[i]);
+		var dest=graph.getVertexFromLabel(edgedest[i]);
+		sour.addLinkto(dest);
+	};
+ 					
+	return graph;
 }

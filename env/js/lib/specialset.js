@@ -6,6 +6,7 @@ function SpecialSet(){
 	this.array=[];
 	this.getList=getList;
 	this.contains=contains;
+	this.removeAll=removeAll;
 
 	function add(elem){
 		this.array.push(elem);	
@@ -21,6 +22,9 @@ function SpecialSet(){
 			if(this.array[i]!=elem) res.push(this.array[i]);
 		};
 		this.array=res;
+	}
+	function removeAll(){
+		this.array=[];
 	}
 	function size(){
 		return this.array.length;

@@ -1,4 +1,82 @@
 <html>
-<head>work in progress</head>
-<body></body>
+	<head>
+		<script src="js/lib/simgraph.js"></script>
+		<script src="js/lib/utility.js"></script>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<h2>
+			greedy approach by Eads '93
+		</h2>
+ 		<table>
+    		<tr>
+        		<td>import csv file:</td>
+        		<td><input type="file" id="fileToLoad"></td>
+        		<td><button onclick="loadFileAsText()">ok</button><td>
+        		<td><button onclick="execute()">execute</button><td>
+                <td><button onclick="window.location='greedy.html';">erase</button></td>
+    		</tr>
+    		<tr>
+        		<td>save output as csv file:  </td>
+        		<td><input id="inputFileNameToSaveAs"></input></td>
+        		<td><button onclick="saveTextAsFile()">save</button></td>
+    		</tr>
+		</table>
+
+		<table style="width:70%;">
+    		<th><div valign="bottom" id="divID1"></div></th>
+        	<th><div valign="bottom" id="divID2"></div></th>
+		</table>	
+ 
+		<script type="text/javascript">
+ 			
+ 			var textFromFileLoaded="";
+ 			var graph2=new Simgraph();
+
+ 			function execute(){
+ 				var graph=createGraphFromCsv(textFromFileLoaded);
+ 				var div2 = document.getElementById('divID2');
+ 				var div1 = document.getElementById('divID1');
+
+ 				div1.innerHTML = div1.innerHTML +"<h2>pre-greedy</h2>"+ graph.getCsvForm("<br>");
+
+ 				//begin heuristic
+
+ 				//end heuristic
+
+  				div2.innerHTML = div2.innerHTML +"<h2>post-greedy</h2>"+ graph.getCsvLW("<br>");
+
+  				graph2=graph;
+ 			}
+
+			function saveTextAsFile(){
+    			var textToSave = graph2.getCsvLW("\n");
+    			var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+    			var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    			var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+ 
+    			var downloadLink = document.createElement("a");
+    			downloadLink.download = fileNameToSaveAs;
+    			downloadLink.innerHTML = "Download File";
+    			downloadLink.href = textToSaveAsURL;
+    			downloadLink.onclick = destroyClickedElement;
+    			downloadLink.style.display = "none";
+    			document.body.appendChild(downloadLink);
+ 
+    			downloadLink.click();
+			}
+			function destroyClickedElement(event){
+				document.body.removeChild(event.target);
+			}
+			function loadFileAsText(){
+				var fileToLoad = document.getElementById("fileToLoad").files[0];
+    			var fileReader = new FileReader();
+    			fileReader.onload = function(fileLoadedEvent){
+					textFromFileLoaded = fileLoadedEvent.target.result;
+					console.log(textFromFileLoaded);
+				};
+    			fileReader.readAsText(fileToLoad, "UTF-8");
+			} 
+		</script>
+	</body>
 </html>
