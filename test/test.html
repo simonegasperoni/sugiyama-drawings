@@ -3,7 +3,7 @@
 <html>
  <body>
 	<script src="../env/js/lib/simgraph.js"></script>
-
+	<script src="../env/js/lib/utility.js"></script>
 	
 	<script>
 		//test simgraph
@@ -34,7 +34,7 @@
 		e.addLinkto(f);
 		f.addLinkto(g);
 		g.addLinkto(e);
-		graph.print();
+		//graph.print();
 		
 
 		document.write("<br>");
@@ -49,7 +49,12 @@
 
 		graph.rmVertex(a);
 		//document.write(graph.getVertices().length +"<br>");
-		graph.print();		
+		var prova=[1,1,1,1];
+		;
+		console.log(addTale(prova,3));
+		
+		console.log(addHead(prova,9));
+		//graph.print();		
 
 	</script>
  </body>

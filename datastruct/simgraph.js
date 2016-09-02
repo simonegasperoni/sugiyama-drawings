@@ -1,12 +1,6 @@
-//graph minimal representation
+//simone gasperoni
+//graph representation
 
-function contains(a, obj) {
-   	var i = a.length;
-  	while (i--) 
-  		if (a[i]===obj) 
-  			return true;
-   	return false;
-}
 function Simvertex(vertex){
 	
 	this.vertex=vertex;
@@ -302,6 +296,13 @@ function Simgraph(){
 	}
 }
 
+function contains(a, obj) {
+   	var i = a.length;
+  	while (i--) 
+  		if (a[i]===obj) 
+  			return true;
+   	return false;
+}
 
 function createGraphFromCsv(text){
 	var graph=new Simgraph();

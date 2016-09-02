@@ -5,18 +5,30 @@ function contains(a, obj) {
   			return true;
    	return false;
 }
+
 function indexOfSmallest(a) {
-  var lowest = 0;
-  for (var i = 1; i < a.length; i++) {
-    if (a[i] < a[lowest]) lowest = i;
-  }
-  return lowest;
+    var lowest = 0;
+    for (var i = 1; i < a.length; i++) {
+      if (a[i] < a[lowest]) lowest = i;
+    }
+    return lowest;
 }
+
 function addToSet(array, elem){
-	if(!contains(array, elem)){
-		array.push(elem);
-	}
+	 if(!contains(array, elem)){
+  		array.push(elem);
+	 }
 }
+
+function addHead(array, obj){
+    return [obj].concat(array);
+}
+
+function addTale(array, obj){
+    array.push(obj);
+    return array;
+}
+
 function permutate(array, callback) {
     // Do the actual permuation work on array[], starting at index
     function p(array, index, callback) {

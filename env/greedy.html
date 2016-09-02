@@ -34,19 +34,63 @@
  			var graph2=new Simgraph();
 
  			function execute(){
- 				var graph=createGraphFromCsv(textFromFileLoaded);
+ 				
  				var div2 = document.getElementById('divID2');
  				var div1 = document.getElementById('divID1');
+
+ 				var graph=createGraphFromCsv(textFromFileLoaded);
+				var g=createGraphFromCsv(textFromFileLoaded);
+
 
  				div1.innerHTML = div1.innerHTML +"<h2>pre-greedy</h2>"+ graph.getCsvForm("<br>");
 
  				//begin heuristic
 
+ 				var sl=[];
+ 				var sr=[];
+ 				var a=true;
+
+ 				while(a){
+ 					
+ 					while(g.thereIsSink()) {
+ 						var sink=g.returnSink();
+ 						g.rmVertex(sink);
+ 						sr=addHead(sr, sink);
+ 					}
+ 					while(g.thereIsSource()) {
+ 						var source=g.returnSource();
+ 						g.rmVertex(source);
+ 						sl=addTale(sl, source);
+ 					}
+ 					if(g.getVertices().length==0){
+ 						a=false;
+ 					}
+ 					else{
+ 						var aux=g.getVertices();
+ 						var value=aux[0];
+ 						var max=g.outdeg(aux[0])-g.indeg(aux[0]);
+ 						for (var i = 1; i < aux.length; i++) {
+ 							var cur=graph.outdeg(aux[i])-graph.indeg(aux[i]);
+ 							if(cur>max){
+ 								max=cur;
+ 								value=aux[i];
+ 							}
+ 						}
+ 						g.rmVertex(value);
+ 						sl=addTale(sl, value);
+
+ 					}
+
+ 				}
+
  				//end heuristic
 
-  				div2.innerHTML = div2.innerHTML +"<h2>post-greedy</h2>"+ graph.getCsvLW("<br>");
-
+  				console.log(sl.map(gv))
+  				console.log(sr.map(gv))
   				graph2=graph;
+ 			}
+ 			function gv(obj){
+ 				return obj.getVertex();
  			}
 
 			function saveTextAsFile(){
