@@ -47,13 +47,9 @@
 		document.write("||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>");
 		document.write("<br>");
 
-		graph.rmVertex(a);
-		//document.write(graph.getVertices().length +"<br>");
-		var prova=[1,1,1,1];
-		;
-		console.log(addTale(prova,3));
+		var vertex=graph.getVertexFromLabel("a");
+		console.log(vertex.getLinks().length);
 		
-		console.log(addHead(prova,9));
 		//graph.print();		
 
 	</script>

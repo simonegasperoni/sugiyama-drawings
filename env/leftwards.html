@@ -28,8 +28,9 @@
     		<th><div valign="bottom" id="divID1"></div></th>
         	<th><div valign="bottom" id="divID2"></div></th>
 		</table>	
-		<br><br>
-		<div valign="bottom" id="divID3"></div>
+		<br>
+		<div valign="bottom" id="divID3">
+		</div>
 		</div>  
 		<script type="text/javascript">
  			
@@ -43,7 +44,7 @@
  				var div3 = document.getElementById('divID3');
 
  				div1.innerHTML = div1.innerHTML +"<h2>pre-leftward-edges</h2>"+ graph.getCsvForm("<br>");
-
+ 				div3.innerHTML = div3.innerHTML +"<h2>permutations and #leftwards</h2>";
  				//permutations
 
  				
@@ -58,6 +59,7 @@
   				// Show result[]
   				for (var i = 0; i < result.length; i++) {
   					var s=new SpecialSet();
+  					div3.innerHTML = div3.innerHTML+"permutation: ";
   					for (var j = 0; j < result[i].length; j++) {
   						div3.innerHTML = div3.innerHTML+result[i][j].getVertex()+", ";
   						s.addAll(result[i][j].getLinks4());
@@ -67,24 +69,21 @@
   					div3.innerHTML = div3.innerHTML + lwcounter[i] + "<br>";
   				};
   				
-  				var edges=new SpecialSet();
 				var a=result[indexOfSmallest(lwcounter)];
-				for (var j = 0; j < a.length; j++) {
+				var res=[];
+				var aux=[];
 
-  					edges.addAll(a[j].getLinks());
-  					var targets=edges.getList().map(returnTarget);
-  					
-  					if(targets.indexOf(a[j])>=0){
-  					 	var res=[];
-  					 	for (var i = 0; i < edges.length; i++) {
-  					 		if(edges[i].getSecondnode()!=a[j]) res.push(edges[i]);
-  					 	};
-  					 	edges.removeAll();
-  					 	edges.addAll(res);
-  					}
-  				};
-  				
-  				edges.getList().map(returnEdgesInverted);
+	
+				for (var i = a.length - 1; i >= 0; i--) {
+					addAll(aux,a[i].getLinks());
+
+					for (var j = 0; j < aux.length; j++) {
+						if(aux[j].secondnode==a[i])
+							res.push(aux[j]);
+					};
+				};
+  
+  				res.map(returnEdgesInverted);
 
   				div2.innerHTML = div2.innerHTML +"<h2>post-leftward-edges</h2>"+ graph.getCsvLW("<br>");
 
@@ -96,6 +95,11 @@
  			function returnEdgesInverted(obj){
  				obj.setInverted();
  				return obj.revEdge();
+ 			}
+ 			function addAll(arr1,arr2){
+ 				for (var i = 0; i < arr2.length; i++) {
+ 					arr1.push(arr2[i]);
+ 				};
  			}
  			
 

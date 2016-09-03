@@ -84,8 +84,7 @@ function Simedge(firstnode, secondnode){
 
 	function printEdge(){
 		return "edge: "+this.firstnode.getVertex()+" -> "
-						+this.secondnode.getVertex()+
-						", tree: "+ this.isPartOfSpanningtree();
+						+this.secondnode.getVertex()+"; ";
 	}
 	
 	function getFirstnode(){
@@ -148,7 +147,18 @@ function Simgraph(){
 	this.thereIsSource=thereIsSource;
 	this.returnSink=returnSink;
 	this.returnSource=returnSource;
-	
+	this.getVertexFromLabel=getVertexFromLabel;
+
+	function getVertexFromLabel(label){
+		var res=null;
+		for (var i = 0; i < this.vertices.length; i++) {
+			if(this.vertices[i].getVertex()==label){
+				res=this.vertices[i];
+				break;
+			}
+		};
+		return res;
+	}
 	
 	function setInitialStates(states){
 		this.initialstates=states;
