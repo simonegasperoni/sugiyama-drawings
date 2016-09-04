@@ -1,6 +1,12 @@
-//simone gasperoni
-//graph representation
+//graph minimal representation
 
+function contains(a, obj) {
+   	var i = a.length;
+  	while (i--) 
+  		if (a[i]===obj) 
+  			return true;
+   	return false;
+}
 function Simvertex(vertex){
 	
 	this.vertex=vertex;
@@ -78,8 +84,7 @@ function Simedge(firstnode, secondnode){
 
 	function printEdge(){
 		return "edge: "+this.firstnode.getVertex()+" -> "
-						+this.secondnode.getVertex()+
-						", tree: "+ this.isPartOfSpanningtree();
+						+this.secondnode.getVertex()+"; ";
 	}
 	
 	function getFirstnode(){
@@ -142,7 +147,18 @@ function Simgraph(){
 	this.thereIsSource=thereIsSource;
 	this.returnSink=returnSink;
 	this.returnSource=returnSource;
-	
+	this.getVertexFromLabel=getVertexFromLabel;
+
+	function getVertexFromLabel(label){
+		var res=null;
+		for (var i = 0; i < this.vertices.length; i++) {
+			if(this.vertices[i].getVertex()==label){
+				res=this.vertices[i];
+				break;
+			}
+		};
+		return res;
+	}
 	
 	function setInitialStates(states){
 		this.initialstates=states;
@@ -296,13 +312,6 @@ function Simgraph(){
 	}
 }
 
-function contains(a, obj) {
-   	var i = a.length;
-  	while (i--) 
-  		if (a[i]===obj) 
-  			return true;
-   	return false;
-}
 
 function createGraphFromCsv(text){
 	var graph=new Simgraph();

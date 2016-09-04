@@ -1,4 +1,47 @@
 <html>
-<head>work in progress</head>
-<body></body>
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		Follows a practical guide:
+		<h2>drawing</h2>
+		<p>
+			In this page you can upload a graph (written by its edges) in the following CSV format:
+			<code>
+				<br><br><br>source,target
+				<br>b,a
+				<br>b,c
+				<br>c,e
+				<br>e,f
+				<br>f,b
+				<br>a,f
+				<br>a,d
+				<br>d,b
+				<br>c,f<br><br><br>
+			</code>
+			The file must necessarily be in the 'CSVs' folder. The display of the graph can highlight the inverted edges in red if we had used a heuristic to get it. For example this is the csv output file product by dfs-based heuristic. The value 0 shows that the edge has been inverted:
+			<code>
+				<br><br><br>source,target,value
+				<br>b,a,1
+				<br>b,c,1
+				<br>a,f,1
+				<br>a,d,1
+				<br>c,e,1
+				<br>f,c,0
+				<br>f,e,0
+				<br>b,f,0
+				<br>b,d,0<br><br><br>
+			</code>
+		</p>
+		<h2>heuristics: dfs, leftwards, greedy</h2>
+		<p>
+			In the follows GitHub Readme there is an overview about the heuristics I implemented: 
+			<br>
+				<a href="https://github.com/simonegasperoni/graph_cycle_removal/blob/master/README.md">
+					link to github readme
+				</a>.
+			<br>
+			In dfs, leftwards, and greedy pages, we can select the csv file, confirm file pushing 'ok', when we push 'execute' we obtain a new representation without cycle of the graph. It's possible export a new csv (graph without cycle) using the form below. 
+		</p>
+	</body>
 </html>
