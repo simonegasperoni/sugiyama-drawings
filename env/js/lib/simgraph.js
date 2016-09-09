@@ -173,7 +173,7 @@ function Simgraph(){
 		visited.push(node.getVertex());
 		//document.write(node.getVertex());
 		for (var i in adj) {
-			var edge = adj[i];
+			var edge=adj[i];
 			var dest=edge.getSecondnode();
 			if (0 > visited.indexOf(dest.getVertex())){
 				adj[i].setPartOfSpanningtree();
