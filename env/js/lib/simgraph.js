@@ -138,6 +138,7 @@ function Simgraph(){
 	this.returnSink=returnSink;
 	this.returnSource=returnSource;
 	this.getVertexFromLabel=getVertexFromLabel;
+	this.returnNodeOutTrees=returnNodeOutTrees;
 
 	function getVertexFromLabel(label){
 		var res=null;
@@ -165,10 +166,10 @@ function Simgraph(){
 		for (var i in adj) {
 			var edge=adj[i];
 			var dest=edge.getSecondnode();
-			if (visited.indexOf(dest)<0){
-				dfs_recur(dest, visited);
+			if(dest.othertree!=true){
+				if (visited.indexOf(dest)<0) dfs_recur(dest, visited);
+				else adj[i].setInverted();
 			}
-			else adj[i].setInverted();
 		}
 		return visited;
 	}
@@ -299,6 +300,17 @@ function Simgraph(){
 			if(this.indeg(this.vertices[i])==0) value=this.vertices[i];
 		};
 		return value;
+	}
+
+	function returnNodeOutTrees(){
+		var res=null;
+		for (var i = 0; i < this.vertices.length; i++) {
+			if(this.vertices[i].othertree==false){
+				res=this.vertices[i];
+				break;
+			};
+		}
+		return res;
 	}
 }
 

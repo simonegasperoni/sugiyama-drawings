@@ -27,21 +27,40 @@
     		<th><div id="divID1"></div></th>
         	<th><div id="divID2"></div></th>
 		</table>
+        <div id="divID3"></div>
 
-		
- 
 		<script type="text/javascript">
  			var textFromFileLoaded="";
             var graph2=new Simgraph();
+    
+            function setOtherTree(obj){
+                obj.othertree=true;
+            }
+            function rv(obj){
+                return obj.getVertex();
+            }
 
             function execute(){
                 var graph=createGraphFromCsv(textFromFileLoaded);
                 var div2 = document.getElementById('divID2');
                 var div1 = document.getElementById('divID1');
+                var div3 = document.getElementById('divID3');
 
  				div1.innerHTML = div1.innerHTML +"<h2>pre-dfs</h2>"+ graph.getCsvForm("<br>");
- 				console.log(graph.getVertices()[0].getVertex());
-                graph.dfs(graph.getVertices()[0]);
+                div3.innerHTML = div3.innerHTML +"<h2>log</h2>";
+ 				console.log("----------------");
+                
+                var a=graph.returnNodeOutTrees();
+                console.log(""+a.getVertex());
+                while(a!=null){
+                    var v=graph.dfs(a);
+                    v.map(setOtherTree);
+                    a=graph.returnNodeOutTrees();
+                    div3.innerHTML = div3.innerHTML 
+                        +"visited nodes for a traversal dfs: ["+v.map(rv)+"]<br>";
+                }
+
+
 
  				var vertices=graph.getVertices();
  				for (var i = 0; i<vertices.length; i++) {
@@ -52,10 +71,15 @@
  							}
  					};
  				};
-
+                //console.log(graph.getVertices().map(printone));
+                //console.log(graph.returnNodeOutTrees());
  				div2.innerHTML = div2.innerHTML +"<h2>post-dfs</h2>"+graph.getCsvLW("<br>");
  				graph2=graph;
  			}
+
+            function printone(obj){
+                return obj.print();
+            }
 
 			function saveTextAsFile(){
     			var textToSave = graph2.getCsvForm2("\n");

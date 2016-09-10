@@ -19,6 +19,11 @@ function Simvertex(vertex){
 	this.getLinks4=getLinks4;
 	this.rmLinkto=rmLinkto;
 	this.addLinkto=addLinkto;
+	this.print=print;
+
+	function print(){
+		return this.vertex+" - othertree: "+this.othertree;
+	}
 
 	function getVertex(){
 		return this.vertex;
@@ -75,9 +80,6 @@ function Simedge(firstnode, secondnode){
 	this.printEdge=printEdge;
 	this.getFirstnode=getFirstnode;
 	this.getSecondnode=getSecondnode;
-	this.isPartOfSpanningtree=isPartOfSpanningtree;
-	this.setPartOfSpanningtree=setPartOfSpanningtree;
-	this.noPartOfSpanningtree=noPartOfSpanningtree;
 	this.revEdge=revEdge;
 	this.setInverted=setInverted;
 	this.isInverted=isInverted;
@@ -96,14 +98,6 @@ function Simedge(firstnode, secondnode){
 		return this.secondnode;
 	}
 	
-	function isPartOfSpanningtree(){
-		return this.intree;
-	}
-	
-	function setPartOfSpanningtree(){
-		this.intree=true;
-	}
-
 	function setInverted(){
 		this.intree=true;
 	}
@@ -112,11 +106,6 @@ function Simedge(firstnode, secondnode){
 		return this.intree;
 	}
 	
-	
-	function noPartOfSpanningtree(){
-		this.intree=false;
-	}
-
 	function revEdge(){
 		var aux1=this.firstnode;
 		var aux2=this.secondnode;
@@ -149,6 +138,7 @@ function Simgraph(){
 	this.returnSink=returnSink;
 	this.returnSource=returnSource;
 	this.getVertexFromLabel=getVertexFromLabel;
+	this.returnNodeOutTrees=returnNodeOutTrees;
 
 	function getVertexFromLabel(label){
 		var res=null;
@@ -171,14 +161,14 @@ function Simgraph(){
 
 	function dfs_recur(node, visited) {
 		var adj = node.getLinks();
-		visited.push(node.getVertex());
+		visited.push(node);
 		//document.write(node.getVertex());
 		for (var i in adj) {
 			var edge=adj[i];
 			var dest=edge.getSecondnode();
-			if (0 > visited.indexOf(dest.getVertex())){
-				adj[i].setPartOfSpanningtree();
-				dfs_recur(dest, visited);
+			if(dest.othertree!=true){
+				if (visited.indexOf(dest)<0) dfs_recur(dest, visited);
+				else adj[i].setInverted();
 			}
 		}
 		return visited;
@@ -310,6 +300,17 @@ function Simgraph(){
 			if(this.indeg(this.vertices[i])==0) value=this.vertices[i];
 		};
 		return value;
+	}
+
+	function returnNodeOutTrees(){
+		var res=null;
+		for (var i = 0; i < this.vertices.length; i++) {
+			if(this.vertices[i].othertree==false){
+				res=this.vertices[i];
+				break;
+			};
+		}
+		return res;
 	}
 }
 
