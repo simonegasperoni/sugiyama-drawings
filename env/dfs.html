@@ -40,13 +40,14 @@
                 var div1 = document.getElementById('divID1');
 
  				div1.innerHTML = div1.innerHTML +"<h2>pre-dfs</h2>"+ graph.getCsvForm("<br>");
- 				graph.dfs(graph.getVertices()[0]);
+ 				console.log(graph.getVertices()[0].getVertex());
+                graph.dfs(graph.getVertices()[0]);
 
  				var vertices=graph.getVertices();
  				for (var i = 0; i<vertices.length; i++) {
  					edges=vertices[i].getLinks();
  					for (var j = 0; j<edges.length; j++) {
- 							if(!edges[j].isPartOfSpanningtree()){
+ 							if(edges[j].isInverted()){
  								edges[j].revEdge();
  							}
  					};
@@ -55,6 +56,7 @@
  				div2.innerHTML = div2.innerHTML +"<h2>post-dfs</h2>"+graph.getCsvLW("<br>");
  				graph2=graph;
  			}
+
 			function saveTextAsFile(){
     			var textToSave = graph2.getCsvForm2("\n");
     			var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
