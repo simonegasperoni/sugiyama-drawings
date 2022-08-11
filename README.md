@@ -1,6 +1,7 @@
+
 # sugiyama_step1
 
-##An overview on hierarchical graph
+## An overview on hierarchical graph
 In a hierarchical drawing of a directed graph: nodes are drawn on a collection of horizontal lines (levels or layers), edges are represented with polylines (polygonal chains).
 
 ----------------------
@@ -11,7 +12,7 @@ In a hierarchical drawing of a directed graph: nodes are drawn on a collection o
 
 Hierarchical drawings are used to represent precedence relationships. Applications include: computer network visualization, web maps visualization, visualization of biologic maps, social networks visualization, others...
 
-##Sugiyama methodology
+## Sugiyama methodology
 Layered graph drawing or hierarchical graph drawing is a type of graph drawing in which the vertices of a directed graph are drawn in horizontal rows or layers with the edges generally directed downwards.It is also known as Sugiyama-style graph drawing after Kozo Sugiyama, who first developed this drawing style.
 
 The four steps of the methodology:
@@ -23,8 +24,8 @@ The four steps of the methodology:
 
 Several alternative algorithms and heuristics are nowadays available for each step.
 
-##Goal
-I'm going to explore the various alternatives (heuristics) for the removal of the direct cycles of a directed graph, th goal is reducing the number of edges that have been inverted.
+## Goal
+I'm going to explore the various alternatives (heuristics) for the removal of the direct cycles of a directed graph, the goal is reducing the number of edges that have been inverted.
 
 I would compare the following heuristics (see resources):
 
@@ -32,7 +33,7 @@ I would compare the following heuristics (see resources):
 2. **Leftward-edges**
 3. **Greedy approach proposed by Eades**
 
-##Focus on cycle removal
+## Focus on cycle removal
 Simply we have a graph G with a set of edege E and a set of vertices V (nodes), the problem is the following:
 
 ```
@@ -43,13 +44,13 @@ TARGET:   Reverse the direction of a small subset of the edges of G
 
 If G=(V,E) is a directed graph and R is a set of edges, G<sub>rev(R)</sub> is the graph obtained by reversing the edges in R. We would like to reverse a set of edges R, our target is obtain a G<sub>rev(R)</sub> such that G<sub>rev(R)</sub> is acyclic and |R| is minimum.
 
-##Feedback set vs feedback arc set
+## Feedback set vs feedback arc set
 A set R of edges of a directed graph G=(V,E) is a **feedback set** if G<sub>rev(R)</sub> is acyclic, whereas a **feedback arc set** is a set of edges whose removal makes the graph acyclic.
 
 *Feedback set and feedback arc set are related but different concepts removing all edges of a cycle makes it trivially acyclic, reversing all edges of a cycle only changes its direction*
 
-##Heuristics
-####A simple heuristic based on DFS: Depth First Search
+## Heuristics
+#### A simple heuristic based on DFS: Depth First Search
 A simple algorithm to find a feedback set R of a directed graph G consists of performing a series of DFS traversals of G and add all back 
 edges to R, DFS visits are launched on non-explored nodes until the whole graph is explored.
 
@@ -58,7 +59,7 @@ Size of the feedback set R: we assume G is connected, if a single DFS is perform
 |R| = |E|-(|V|-1) = |E|-|V|+1
 ```
 
-####A simple heuristic based on leftward edges
+#### A simple heuristic based on leftward edges
 Lets look at the problem from a different perspective, let us choose a permutation: π = (v<sub>1</sub>, v<sub>2</sub>, ..., v<sub>n</sub>) 
 of the nodes of G any edge (v<sub>i</sub>, v<sub>j</sub>) with i > j is said to be a leftward edge (with respect to π)
 ![Alt text](img/dfs.png?raw=true "dfs approach")
@@ -79,7 +80,7 @@ that is, whenever
 ```
 |E| > 2|V| - 2
 ```
-####Greedy approach proposed by Eades
+#### Greedy approach proposed by Eades
 
 A more sophisticated strategy has been proposed by eads, it based on a greedy technique. It searches for a sub-optimum sulution 
 through a sequence of steps focused on local optima.
@@ -111,7 +112,7 @@ Greedycycleremoval(G):
 	return Sl concatenates Sr
 ```
 
-##Resources
+## Resources
 
 - http://www.dia.uniroma3.it/~infovis/slides/2015-2016/180-layered-first-03.pdf
 - https://en.wikipedia.org/wiki/Layered_graph_drawing
